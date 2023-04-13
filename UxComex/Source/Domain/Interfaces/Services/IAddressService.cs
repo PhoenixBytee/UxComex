@@ -1,6 +1,8 @@
-﻿namespace UxComex.Source.Domain.Interfaces.Services
+﻿using UxComex.Source.Domain.Entities;
+
+namespace UxComex.Source.Domain.Interfaces.Services
 {
-    public class IAddressService
+    public interface IAddressService : IService<AddressEntity>
     {
     }
 }

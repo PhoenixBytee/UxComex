@@ -1,6 +1,8 @@
-﻿namespace UxComex.Source.Domain.Interfaces.Repositories
+﻿using UxComex.Source.Domain.Entities;
+
+namespace UxComex.Source.Domain.Interfaces.Repositories
 {
-    public class IClientRepository
+    public interface IClientRepository : IRepository<ClientEntity>
     {
     }
 }
