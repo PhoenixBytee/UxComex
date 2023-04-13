@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using UxComex.Models;
 
-namespace UxComex.Controllers
+namespace UxComex.Source.Presentation.Controllers
 {
     public class HomeController : Controller
     {

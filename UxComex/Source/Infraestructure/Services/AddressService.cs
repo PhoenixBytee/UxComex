@@ -3,9 +3,9 @@ using UxComex.Source.Domain.Interfaces.Services;
 
 namespace UxComex.Source.Infraestructure.Services
 {
-    public class ClientService : IClientService
+    public class AddressService : IAddressService
     {
-        public void Create(ClientEntity entity)
+        public void Create(AddressEntity entity)
         {
             throw new NotImplementedException();
         }
@@ -15,19 +15,25 @@ namespace UxComex.Source.Infraestructure.Services
             throw new NotImplementedException();
         }
 
-        public IEnumerable<ClientEntity> GetAll()
+        public IEnumerable<AddressEntity> GetAll()
         {
             throw new NotImplementedException();
         }
 
-        public ClientEntity GetById(int id)
+        public Task<IEnumerable<AddressEntity>> GetAllByClientId(int clientId)
         {
             throw new NotImplementedException();
         }
 
-        public void Update(ClientEntity entity)
+        public AddressEntity GetById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(AddressEntity entity)
         {
             throw new NotImplementedException();
         }
     }
+}
 }
