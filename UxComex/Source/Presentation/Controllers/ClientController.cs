@@ -94,5 +94,45 @@ namespace UxComex.Source.Presentation.Controllers
 
             return RedirectToAction("Details", new { id = id });
         }
+
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var client = await _clientService.GetById(id);
+
+            var viewModel = new ClientViewModel
+            {
+                Id = client.Id,
+                Cpf = client.Cpf,
+                Name = client.Name,
+                Telephone= client.Telephone,
+                CreatedAt = client.CreatedAt,
+                UpdatedAt = client.CreatedAt
+            };
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult Update(ClientViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", viewModel);
+            }
+
+            var client = new ClientEntity
+            {
+                Id = viewModel.Id,
+                Name = viewModel.Name,
+                Cpf= viewModel.Cpf,
+                Telephone = viewModel.Telephone,
+                UpdatedAt= DateTime.Now
+            };
+
+            _clientService.Update(client);
+
+            return RedirectToAction("Index", "Client");
+        }
     }
 }

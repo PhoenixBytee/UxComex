@@ -35,9 +35,10 @@
                                     <a href="@Url.Action("Edit", "Client", new { id = client.Id })" class="btn btn-warning">
                                         Editar
                                     </a>
-                                    <a href="@Url.Action("Delete", "Client", new { id = client.Id })" class="btn btn-danger">
+                                    <a href="@Url.Action("Delete", "Client", new { id = client.Id })" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este cliente?')">
                                         Excluir
                                     </a>
+
                                 </td>
                             </tr>
                         }

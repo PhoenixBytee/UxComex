@@ -48,7 +48,8 @@ namespace UxComex.Source.Infraestructure.Repositories
                     Client SET 
                     Name = @Name, 
                     Telephone = @Telephone, 
-                    Cpf = @Cpf 
+                    Cpf = @Cpf,
+                    UpdatedAt = @UpdatedAt 
                     WHERE Id = @Id";
             return await db.ExecuteAsync(query, entity);
         }

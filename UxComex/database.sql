@@ -25,9 +25,9 @@ CREATE TABLE Address (
 
 INSERT INTO client (Name, Telephone, Cpf)
 VALUES 
-('Fulano', '(11) 1111-1111', '111.111.111-11'),
-('Ciclano', '(22) 2222-2222', '222.222.222-22'),
-('Beltrano', '(33) 3333-3333', '333.333.333-33');
+('Fulano', '(11) 11111-1111', '111.111.111-11'),
+('Ciclano', '(22) 22222-2222', '222.222.222-22'),
+('Beltrano', '(33) 33333-3333', '333.333.333-33');
 
 INSERT INTO Address (Street, ZipCode, City, State, ClientId)
 VALUES
