@@ -4,4 +4,6 @@
 
     // Aplica a máscara de CPF nos campos com a classe "cpf-mask"
     $('.cpf-mask').mask('000.000.000-00');
+
+    $('.cep-mask').mask('00000-000');
 });

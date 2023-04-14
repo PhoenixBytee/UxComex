@@ -19,5 +19,4 @@ namespace UxComex.Source.Presentation.ViewModels
         public DateTime CreatedAt { get; set; }
         public DateTime UpdateddAt { get; set; }
     }
-
 }
