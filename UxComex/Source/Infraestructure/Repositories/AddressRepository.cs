@@ -1,4 +1,8 @@
-﻿using UxComex.Source.Domain.Entities;
+﻿using Dapper;
+using System.Data;
+using System.Data.SqlClient;
+using System.Net;
+using UxComex.Source.Domain.Entities;
 using UxComex.Source.Domain.Interfaces.Repositories;
 
 namespace UxComex.Source.Infraestructure.Repositories
@@ -12,33 +16,62 @@ namespace UxComex.Source.Infraestructure.Repositories
             _connectionString = connectionString;
         }
 
-        public Task<IEnumerable<AddressEntity>> GetAllAsync()
+        private IDbConnection CreateConnection()
         {
-            throw new NotImplementedException();
+            return new SqlConnection(_connectionString);
         }
 
-        public Task<IEnumerable<AddressEntity>> GetByClientIdAsync(int clientId)
+        public async Task<IEnumerable<AddressEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using IDbConnection db = CreateConnection();
+            string query = "SELECT * FROM Address";
+            return await db.QueryAsync<AddressEntity>(query);
         }
 
-        public Task<AddressEntity> GetByIdAsync(int id)
+        public async Task<IEnumerable<AddressEntity>> GetByClientIdAsync(int clientId)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = CreateConnection();
+            string query = "SELECT * FROM Address WHERE ClientId = @ClientId";
+            return await db.QueryAsync<AddressEntity>(query, new { ClientId = clientId });
         }
 
-        public Task<int> InsertAsync(AddressEntity entity)
+        public async Task<AddressEntity> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = CreateConnection();
+            string query = "SELECT * FROM Address WHERE Id = @Id";
+            return await db.QueryFirstOrDefaultAsync<AddressEntity>(query, new { Id = id });
         }
 
-        public Task<int> UpdateAsync(AddressEntity entity)
+        public async Task<int> InsertAsync(AddressEntity entity)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = CreateConnection();
+            string query = @"
+                INSERT INTO 
+                Address (Address, Cep, City, State, ClientId) 
+                VALUES (@Address, @Cep, @City, @State, @ClientId); 
+                SELECT SCOPE_IDENTITY();";
+            return await db.ExecuteScalarAsync<int>(query, entity);
         }
-        public Task<int> DeleteAsync(int id)
+
+        public async Task<int> UpdateAsync(AddressEntity entity)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = CreateConnection();
+            string query = @"
+                UPDATE 
+                Address SET 
+                Address = @Address, 
+                Cep = @Cep, 
+                City = @City, 
+                State = @State, 
+                ClientId = @ClientId
+                WHERE Id = @Id";
+            return await db.ExecuteAsync(query, entity);
+        }
+        public async Task<int> DeleteAsync(int id)
+        {
+            using IDbConnection db = CreateConnection();
+            string query = "DELETE FROM Address WHERE Id = @Id";
+            return await db.ExecuteAsync(query, new { Id = id });
         }
     }
 }
