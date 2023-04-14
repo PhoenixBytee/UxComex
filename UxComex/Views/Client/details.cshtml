@@ -54,10 +54,10 @@
                             <td>@address.State</td>
                             <td>@address.ZipCode</td>
                             <td>
-                                <a href="@Url.Action("Edit", "Client", new { id = address.Id })" class="btn btn-warning">
+                                <a href="@Url.Action("Edit", "Address", new { id = address.Id })" class="btn btn-warning" data-toggle="modal" data-target="#addAddressModal">
                                     Editar
                                 </a>
-                                <a href="@Url.Action("Delete", "Client", new { id = address.Id })" class="btn btn-danger">
+                                <a href="@Url.Action("Delete", "Address", new { id = address.Id })" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este endereço?')">
                                     Excluir
                                 </a>
                             </td>
@@ -75,7 +75,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addAddressModalLabel">Add Address</h5>
+                <h5 class="modal-title" id="addAddressModalLabel">Adicionar Endereço</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">X</span>
                 </button>

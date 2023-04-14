@@ -145,7 +145,6 @@ namespace UxComex.Source.Presentation.Controllers
 
            await _clientService.Delete(id);
 
-            TempData["SuccessMessage"] = "Cliente excluído com sucesso!";
             return RedirectToAction("Index");
         }
 
