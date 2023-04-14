@@ -1,33 +1,41 @@
 ﻿using UxComex.Source.Domain.Entities;
+using UxComex.Source.Domain.Interfaces.Repositories;
 using UxComex.Source.Domain.Interfaces.Services;
 
 namespace UxComex.Source.Infraestructure.Services
 {
     public class ClientService : IClientService
     {
-        public void Create(ClientEntity entity)
+        private readonly IClientRepository _clientRepository;
+
+        public ClientService(IClientRepository clientRepository)
         {
-            throw new NotImplementedException();
+            _clientRepository = clientRepository;
         }
 
-        public void Delete(int id)
+        public async Task<IEnumerable<ClientEntity>> GetAll()
         {
-            throw new NotImplementedException();
+            return await _clientRepository.GetAllAsync();
         }
 
-        public IEnumerable<ClientEntity> GetAll()
+        public async Task<ClientEntity> GetById(int id)
         {
-            throw new NotImplementedException();
+            return await _clientRepository.GetByIdAsync(id);
         }
 
-        public ClientEntity GetById(int id)
+        public async Task<int> Create(ClientEntity entity)
         {
-            throw new NotImplementedException();
+            return await _clientRepository.InsertAsync(entity);
         }
 
-        public void Update(ClientEntity entity)
+        public async Task<int> Update(ClientEntity entity)
         {
-            throw new NotImplementedException();
+            return await _clientRepository.UpdateAsync(entity);
+        }
+
+        public async Task<int> Delete(int id)
+        {
+            return await _clientRepository.DeleteAsync(id);
         }
     }
 }

@@ -2,11 +2,11 @@
 {
     public interface IService<T>
     {
-        IEnumerable<T> GetAll();
-        T GetById(int id);
-        void Create(T entity);
-        void Update(T entity);
-        void Delete(int id);
+        Task<IEnumerable<T>> GetAll();
+        Task<T> GetById(int id);
+        Task<int> Create(T entity);
+        Task<int> Update(T entity);
+        Task<int> Delete(int id);
     }
 
 }
