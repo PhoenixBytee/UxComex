@@ -1,38 +1,47 @@
 ﻿using UxComex.Source.Domain.Entities;
+using UxComex.Source.Domain.Interfaces.Repositories;
 using UxComex.Source.Domain.Interfaces.Services;
 
 namespace UxComex.Source.Infraestructure.Services
 {
+
     public class AddressService : IAddressService
     {
-        public void Create(AddressEntity entity)
+        private readonly IAddressRepository _addressRepository;
+
+        public AddressService(IAddressRepository addressRepository)
         {
-            throw new NotImplementedException();
+            _addressRepository = addressRepository;
         }
 
-        public void Delete(int id)
+        public Task<IEnumerable<AddressEntity>> GetAll()
         {
-            throw new NotImplementedException();
+            return _addressRepository.GetAllAsync();
         }
-
-        public IEnumerable<AddressEntity> GetAll()
+        public Task<AddressEntity> GetById(int id)
         {
-            throw new NotImplementedException();
+            return _addressRepository.GetByIdAsync(id);
         }
 
         public Task<IEnumerable<AddressEntity>> GetAllByClientId(int clientId)
         {
-            throw new NotImplementedException();
+            return _addressRepository.GetByClientIdAsync(clientId);
         }
 
-        public AddressEntity GetById(int id)
+        public Task<int> Create(AddressEntity entity)
         {
-            throw new NotImplementedException();
+            return _addressRepository.InsertAsync(entity);
         }
 
-        public void Update(AddressEntity entity)
+        public Task<int> Update(AddressEntity entity)
         {
-            throw new NotImplementedException();
+            return _addressRepository.UpdateAsync(entity);
+        }
+
+        public Task<int> Delete(int id)
+        {
+            return _addressRepository.DeleteAsync(id);
+
         }
     }
 }
