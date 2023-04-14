@@ -132,7 +132,7 @@
 
         const data = response.data;
 
-        document.getElementById('zipCode').value = data.cep || '';
+        document.getElementById('zipCode').value = data.cep || cep.replace(/^(\d{5})(\d{3})$/, "$1-$2");;
         document.getElementById('street').value = data.logradouro || '';
         document.getElementById('city').value = data.localidade || '';
         document.getElementById('state').value = data.uf || '';
