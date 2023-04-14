@@ -2,6 +2,8 @@ using Microsoft.Extensions.Configuration;
 using UxComex.Source.Domain.Interfaces.Repositories;
 using UxComex.Source.Domain.Interfaces.Services;
 using UxComex.Source.Infraestructure.Repositories;
+using UxComex.Source.Infraestructure.Services;
+using UxComex.Source.Presentation.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,10 @@ builder.Services.AddScoped<IClientRepository>(x =>
     new ClientRepository(connectionString));
 builder.Services.AddScoped<IAddressRepository>(x =>
     new AddressRepository(connectionString));
+
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
