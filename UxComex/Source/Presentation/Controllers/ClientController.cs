@@ -114,7 +114,7 @@ namespace UxComex.Source.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(ClientViewModel viewModel)
+        public async Task<IActionResult> Update(ClientViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
@@ -130,9 +130,24 @@ namespace UxComex.Source.Presentation.Controllers
                 UpdatedAt= DateTime.Now
             };
 
-            _clientService.Update(client);
+            await _clientService.Update(client);
 
             return RedirectToAction("Index", "Client");
         }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var client = await _clientService.GetById(id);
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+           await _clientService.Delete(id);
+
+            TempData["SuccessMessage"] = "Cliente excluído com sucesso!";
+            return RedirectToAction("Index");
+        }
+
     }
 }
