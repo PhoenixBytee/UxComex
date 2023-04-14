@@ -54,7 +54,7 @@
                             <td>@address.State</td>
                             <td>@address.ZipCode</td>
                             <td>
-                                <a href="@Url.Action("Edit", "Address", new { id = address.Id })" class="btn btn-warning" data-toggle="modal" data-target="#addAddressModal">
+                                <a href="@Url.Action("Edit", "Address", new { id = address.Id })" class="btn btn-warning">
                                     Editar
                                 </a>
                                 <a href="@Url.Action("Delete", "Address", new { id = address.Id })" class="btn btn-danger" onclick="return confirm('Tem certeza que deseja excluir este endereço?')">
@@ -115,11 +115,21 @@
 <script>
 
     const cepInput = document.getElementById('zipCode');
+    const streetInput = document.getElementById('street');
+    const cityInput = document.getElementById('city');
+    const stateInput = document.getElementById('state');
 
-    cepInput.addEventListener('input', function () {
-        const maxLength = 8;
-        const currentValue = cepInput.value.slice(0, maxLength);
-        cepInput.value = currentValue;
+    cepInput.addEventListener('input', () => {
+        cepInput.value = cepInput.value.slice(0, 8);
+        cepInput.value = cepInput.value.replace(/\D/g, '');
+    });
+    streetInput.addEventListener('input', () => { streetInput.value = streetInput.value.slice(0, 30) });
+    cityInput.addEventListener('input', () => { cityInput.value = cityInput.value.slice(0, 30) });
+    
+    stateInput.addEventListener('input', () => { 
+        stateInput.value = stateInput.value.slice(0, 2);
+        stateInput.value = stateInput.value.replace(/[^a-zA-Z]+/g, '');
+        stateInput.value = stateInput.value.toUpperCase();
     });
 
     cepInput.addEventListener('blur', async () => {
@@ -127,8 +137,6 @@
         const url = `https://viacep.com.br/ws/${cep}/json/`;
 
         const response = await axios.get(url);
-
-        console.log(response);
 
         const data = response.data;
 

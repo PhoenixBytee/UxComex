@@ -1,0 +1,57 @@
+﻿@model AddressViewModel
+
+@{
+    ViewData["Title"] = "Editar Endereço";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@using (Html.BeginForm("Update", "Address", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.Id)
+    @Html.HiddenFor(model => model.ClientId)
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Street)
+        @Html.TextBoxFor(m => m.Street, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Street)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City)
+        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.City)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.State)
+        @Html.TextBoxFor(m => m.State, new { @class = "form-control state-mask" })
+        @Html.ValidationMessageFor(m => m.State)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ZipCode)
+        @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control cep-mask" })
+        @Html.ValidationMessageFor(m => m.ZipCode)
+    </div>
+
+    <input type="hidden" name="ClientId" value="@Model.ClientId" />
+
+    <div class="form-group mt-4">
+        <button type="submit" class="btn btn-primary">Atualizar</button>
+        <a asp-controller="Client" asp-action="Details" asp-route-id="@Model.ClientId" class="btn btn-secondary">Voltar</a>
+    </div>
+}
+
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cep-mask').mask('99999-999');
+            $('.state-mask').mask('AA');
+        });
+    </script>
+}

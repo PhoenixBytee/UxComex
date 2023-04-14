@@ -36,21 +36,42 @@ namespace UxComex.Source.Presentation.Controllers
 
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var address = await _addressService.GetById(id);
+
+            var viewModel = new AddressViewModel
+            {
+                Id = id,
+                City = address.City,
+                Street = address.Street,
+                State = address.State,
+                ClientId=address.ClientId,
+                ZipCode = address.ZipCode,
+                CreatedAt = address.CreatedAt,
+            };
+
+            return View(viewModel);
+        }
+
         [HttpPost]
         public async Task<IActionResult> Update(AddressViewModel viewModel)
         {
             if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index", "Client");
+                return RedirectToAction("Details", "Client", new { id = viewModel.ClientId });
             }
 
             var address = new AddressEntity
             {
+                Id = viewModel.Id,
                 City = viewModel.City,
                 Street = viewModel.Street,
                 State = viewModel.State,
                 ZipCode = viewModel.ZipCode,
                 ClientId = viewModel.ClientId,
+                UpdatedAt = DateTime.Now
             };
 
             await _addressService.Update(address);

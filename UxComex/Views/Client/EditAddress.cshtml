@@ -1,0 +1,51 @@
+﻿@model AddressViewModel
+
+@{
+    ViewData["Title"] = "Editar Endereço";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+@using (Html.BeginForm("Edit", "Address", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Street)
+        @Html.TextBoxFor(m => m.Street, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.Street)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.City)
+        @Html.TextBoxFor(m => m.City, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.City)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.State)
+        @Html.TextBoxFor(m => m.State, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.State)
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ZipCode)
+        @Html.TextBoxFor(m => m.ZipCode, new { @class = "form-control" })
+        @Html.ValidationMessageFor(m => m.ZipCode)
+    </div>
+
+    <input type="hidden" name="ClientId" value="@Model.ClientId" />
+
+    <button type="submit" class="btn btn-primary">Save</button>
+}
+
+
+@section scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.cpf-mask').mask('999.999.999-99');
+            $('.phone-mask').mask('(99) 99999-9999');
+        });
+    </script>
+}

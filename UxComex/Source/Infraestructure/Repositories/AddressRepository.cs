@@ -63,7 +63,7 @@ namespace UxComex.Source.Infraestructure.Repositories
                 ZipCode = @ZipCode, 
                 City = @City, 
                 State = @State, 
-                ClientId = @ClientId
+                UpdatedAt = @UpdatedAt
                 WHERE Id = @Id";
             return await db.ExecuteAsync(query, entity);
         }
