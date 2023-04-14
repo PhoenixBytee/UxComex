@@ -47,8 +47,8 @@ namespace UxComex.Source.Infraestructure.Repositories
             using IDbConnection db = CreateConnection();
             string query = @"
                 INSERT INTO 
-                Address (Address, Cep, City, State, ClientId) 
-                VALUES (@Address, @Cep, @City, @State, @ClientId); 
+                Address (Street, ZipCode, City, State, ClientId) 
+                VALUES (@Street, @ZipCode, @City, @State, @ClientId); 
                 SELECT SCOPE_IDENTITY();";
             return await db.ExecuteScalarAsync<int>(query, entity);
         }
@@ -59,8 +59,8 @@ namespace UxComex.Source.Infraestructure.Repositories
             string query = @"
                 UPDATE 
                 Address SET 
-                Address = @Address, 
-                Cep = @Cep, 
+                Street = @Street, 
+                ZipCode = @ZipCode, 
                 City = @City, 
                 State = @State, 
                 ClientId = @ClientId

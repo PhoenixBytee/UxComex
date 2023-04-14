@@ -3,7 +3,6 @@
 @{
     ViewBag.Title = "Client Details";
 }
-
 <div class="container mt-3">
     <div class="card">
         <div class="card-header bg-primary text-white">
@@ -99,6 +98,8 @@
                         <label for="state">Estado:</label>
                         <input type="text" class="form-control" id="state" name="state" required>
                     </div>
+
+                    <input type="hidden" class="form-control" id="clientId" name="clientId" value="@Model.Client.Id">
 
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Salvar</button>

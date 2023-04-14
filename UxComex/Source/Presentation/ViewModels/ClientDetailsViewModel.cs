@@ -4,6 +4,5 @@
     {
         public ClientViewModel Client { get; set; }
         public List<AddressViewModel> Addresses { get; set; }
-        public AddressViewModel Address { get; set; }
     }
 }

@@ -75,14 +75,24 @@ namespace UxComex.Source.Presentation.Controllers
         }
 
         [HttpPost]
-        public IActionResult Create(ClientViewModel client)
+        public async Task<IActionResult> Create(ClientViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction("Index");
+                return View(model);
             }
 
-            return View(client);
+            var client = new ClientEntity
+            {
+                Name = model.Name,
+                Telephone = model.Telephone,
+                Cpf = model.Cpf,
+                CreatedAt = DateTime.Now
+            };
+
+            int id = await _clientService.Create(client);
+
+            return RedirectToAction("Details", new { id = id });
         }
     }
 }
