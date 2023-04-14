@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using UxComex.Models;
 using UxComex.Source.Domain.Entities;
 using UxComex.Source.Presentation.ViewModels;
 
@@ -27,15 +25,40 @@ namespace UxComex.Source.Presentation.Controllers
             return View(clients);
         }
 
+        public IActionResult Details(int id)
+        {
+            var client = new ClientEntity
+            {
+                Id = 1,
+                Name = "John Doe",
+                Telephone = "(11) 1234-5678",
+                Cpf = "111.111.111-11",
+                CreatedAt = DateTime.Now.AddDays(-10),
+                UpdateddAt = DateTime.Now.AddDays(-5)
+            };
+
+           
+            if (client == null)
+            {
+                return NotFound();
+            }
+
+            var clientViewModel = new ClientViewModel
+            {
+                Id = client.Id,
+                Name = client.Name,
+                Telephone = client.Telephone,
+                Cpf = client.Cpf,
+                CreatedAt = client.CreatedAt,
+                UpdateddAt = client.UpdateddAt
+            };
+
+            return View(clientViewModel);
+        }
+
         public IActionResult Privacy()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

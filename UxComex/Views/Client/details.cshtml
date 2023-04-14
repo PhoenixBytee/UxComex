@@ -1,0 +1,30 @@
+﻿@model UxComex.Source.Presentation.ViewModels.ClientViewModel
+
+@{
+    ViewData["Title"] = "Detalhes do Cliente";
+}
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header bg-primary text-white">
+            Detalhes do Cliente
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Id:</strong> @Model.Id</p>
+                    <p><strong>Nome:</strong> @Model.Name</p>
+                    <p><strong>Telefone:</strong> @Model.Telephone</p>
+                    <p><strong>CPF:</strong> @Model.Cpf</p>
+                    <p><strong>Data de Criação:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy")</p>
+                    <p><strong>Data de Atualização:</strong> @Model.UpdateddAt.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <a href="@Url.Action("Index", "Client")" class="btn btn-secondary">Voltar</a>
+            <a href="@Url.Action("Edit", "Client", new { id = Model.Id })" class="btn btn-primary">Editar</a>
+            <a href="@Url.Action("Delete", "Client", new { id = Model.Id })" class="btn btn-danger">Excluir</a>
+        </div>
+    </div>
+</div>
