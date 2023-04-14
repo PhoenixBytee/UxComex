@@ -4,25 +4,32 @@
     ViewData["Title"] = "Criar Cliente";
 }
 
-@using (Html.BeginForm("Create", "Client", FormMethod.Post, new { id = "formClientAlter", name = "formClientAlter" }))
-{
-    <div class="form-group pb-2">
-        @Html.LabelFor(m => m.Name)
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group pb-2">
-        @Html.LabelFor(m => m.Telephone)
-        @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control phone-mask" })
-        @Html.ValidationMessageFor(m => m.Telephone, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group pb-2">
-        @Html.LabelFor(m => m.Cpf)
-        @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control cpf-mask" })
-        @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
-    </div>
-    <div class="form-group">
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
-        <a asp-action="Index" class="btn btn-secondary">Voltar</a>
-    </div>
-}
+<div class="container mt-5">
+    <h1>Criar Cliente</h1>
+
+    @using (Html.BeginForm("Create", "Client", FormMethod.Post, new { id = "formClientAlter", name = "formClientAlter" }))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.Name)
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control", placeholder = "Digite o nome do cliente" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Telephone)
+            @Html.TextBoxFor(m => m.Telephone, new { @class = "form-control phone-mask", placeholder = "Digite o telefone do cliente" })
+            @Html.ValidationMessageFor(m => m.Telephone, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.Cpf)
+            @Html.TextBoxFor(m => m.Cpf, new { @class = "form-control cpf-mask", placeholder = "Digite o CPF do cliente" })
+            @Html.ValidationMessageFor(m => m.Cpf, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group mt-4">
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+            <a asp-action="Index" class="btn btn-secondary">Voltar</a>
+        </div>
+    }
+</div>

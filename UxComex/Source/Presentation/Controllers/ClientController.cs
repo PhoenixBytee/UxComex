@@ -83,11 +83,5 @@ namespace UxComex.Source.Presentation.Controllers
 
             return View(client);
         }
-
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
     }
 }
