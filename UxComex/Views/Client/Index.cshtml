@@ -17,7 +17,6 @@
                             <th>Telefone</th>
                             <th>CPF</th>
                             <th>Data de Criação</th>
-                            <th>Data de Atualização</th>
                             <th>Ações</th>
                         </tr>
                     </thead>
@@ -28,8 +27,7 @@
                                 <td>@client.Name</td>
                                 <td>@client.Telephone</td>
                                 <td>@client.Cpf</td>
-                                <td>@client.CreatedAt.ToString("dd/MM/yyyy HH:mm:ss")</td>
-                                <td>@client.UpdateddAt.ToString("dd/MM/yyyy HH:mm:ss")</td>
+                                <td>@client.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
                                 <td>
                                     <a href="@Url.Action("Details", "Client", new { id = client.Id })" class="btn btn-primary">
                                         Detalhes

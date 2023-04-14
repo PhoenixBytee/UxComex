@@ -17,6 +17,6 @@ namespace UxComex.Source.Presentation.ViewModels
         [StringLength(14)]
         public string Cpf { get; set; }
         public DateTime CreatedAt { get; set; }
-        public DateTime UpdateddAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
     }
 }

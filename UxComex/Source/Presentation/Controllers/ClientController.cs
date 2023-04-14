@@ -8,55 +8,61 @@ namespace UxComex.Source.Presentation.Controllers
     public class ClientController : Controller
     {
         private readonly IClientService _clientService;
+        private readonly IAddressService _addressService;
 
-        public ClientController(IClientService clientService)
+        public ClientController(IClientService clientService, IAddressService addressService)
         {
             _clientService = clientService;
+            _addressService = addressService;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
             var clients = await _clientService.GetAll();
+
+            List<ClientViewModel> addressViewModels = clients.Select(c => new ClientViewModel
+            {
+                Id = c.Id,
+                Cpf = c.Cpf,
+                Name = c.Name,
+                Telephone = c.Telephone,
+                CreatedAt = c.CreatedAt,
+                UpdatedAt = c.UpdatedAt
+            }).ToList();
+
             return View(clients);
         }
 
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            var client = new ClientEntity
+            ClientEntity clientEntity = await _clientService.GetById(id);
+            IEnumerable<AddressEntity> addressList = await _addressService.GetAllByClientId(id);
+
+            if (clientEntity == null) return NotFound();
+
+            List<AddressViewModel> addressViewModels = addressList.Select(a => new AddressViewModel
             {
-                Id = 1,
-                Name = "John Doe",
-                Telephone = "(11) 1234-5678",
-                Cpf = "111.111.111-11",
-                CreatedAt = DateTime.Now.AddDays(-10),
-                UpdateddAt = DateTime.Now.AddDays(-5)
+                Id = a.Id,
+                Street = a.Street,
+                City = a.City,
+                State = a.State,
+                ZipCode = a.ZipCode,
+                ClientId = a.ClientId,
+                CreatedAt = a.CreatedAt,
+            }).ToList();
+
+            var clientViewModel = new ClientViewModel()
+            {
+                Id = clientEntity.Id,
+                Name = clientEntity.Name,
+                Telephone = clientEntity.Telephone,
+                Cpf = clientEntity.Cpf,
             };
 
-            var addressList = new List<AddressViewModel>
-            {
-                new AddressViewModel { Id = 1, Street = "Main Street", City = "New York", State = "NY", ZipCode = "10001", ClientId = client.Id, CreatedAt = DateTime.Now.AddDays(-10), UpdateddAt = DateTime.Now.AddDays(-5) },
-                new AddressViewModel { Id = 2, Street = "Broadway", City = "New York", State = "NY", ZipCode = "10002", ClientId = client.Id, CreatedAt = DateTime.Now.AddDays(-9), UpdateddAt = DateTime.Now.AddDays(-4) }
-            };
-
-
-            if (client == null)
-            {
-                return NotFound();
-            }
-
-            var clientViewModel = new ClientViewModel
-            {
-                Id = client.Id,
-                Name = client.Name,
-                Telephone = client.Telephone,
-                Cpf = client.Cpf,
-                CreatedAt = client.CreatedAt,
-                UpdateddAt = client.UpdateddAt
-            };
 
             var viewModel = new ClientDetailsViewModel
             {
-                Addresses = addressList,
+                Addresses = addressViewModels,
                 Client = clientViewModel
             };
 
