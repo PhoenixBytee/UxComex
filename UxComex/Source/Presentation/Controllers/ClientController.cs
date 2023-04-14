@@ -1,27 +1,22 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using UxComex.Source.Domain.Entities;
+using UxComex.Source.Domain.Interfaces.Services;
 using UxComex.Source.Presentation.ViewModels;
 
 namespace UxComex.Source.Presentation.Controllers
 {
     public class ClientController : Controller
     {
-        private readonly ILogger<ClientController> _logger;
+        private readonly IClientService _clientService;
 
-        public ClientController(ILogger<ClientController> logger)
+        public ClientController(IClientService clientService)
         {
-            _logger = logger;
+            _clientService = clientService;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> IndexAsync()
         {
-            var clients = new List<ClientViewModel>
-            {
-                new ClientViewModel { Id = 1, Name = "João da Silva", Telephone = "(11) 99999-9999", Cpf = "111.111.111-11", CreatedAt = DateTime.Now, UpdateddAt = DateTime.Now },
-                new ClientViewModel { Id = 2, Name = "Maria Santos", Telephone = "(11) 88888-8888", Cpf = "222.222.222-22", CreatedAt = DateTime.Now, UpdateddAt = DateTime.Now },
-                new ClientViewModel { Id = 3, Name = "Pedro Souza", Telephone = "(11) 77777-7777", Cpf = "333.333.333-33", CreatedAt = DateTime.Now, UpdateddAt = DateTime.Now },
-            };
-
+            var clients = await _clientService.GetAll();
             return View(clients);
         }
 

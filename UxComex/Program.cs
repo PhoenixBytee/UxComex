@@ -1,9 +1,7 @@
-using Microsoft.Extensions.Configuration;
 using UxComex.Source.Domain.Interfaces.Repositories;
 using UxComex.Source.Domain.Interfaces.Services;
 using UxComex.Source.Infraestructure.Repositories;
 using UxComex.Source.Infraestructure.Services;
-using UxComex.Source.Presentation.ViewModels;
 
 var builder = WebApplication.CreateBuilder(args);
 
