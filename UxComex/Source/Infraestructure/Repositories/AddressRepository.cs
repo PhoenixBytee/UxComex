@@ -11,10 +11,6 @@ namespace UxComex.Source.Infraestructure.Repositories
         {
             _connectionString = connectionString;
         }
-        public Task<bool> DeleteAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
 
         public Task<IEnumerable<AddressEntity>> GetAllAsync()
         {
@@ -36,7 +32,11 @@ namespace UxComex.Source.Infraestructure.Repositories
             throw new NotImplementedException();
         }
 
-        public Task<bool> UpdateAsync(AddressEntity entity)
+        public Task<int> UpdateAsync(AddressEntity entity)
+        {
+            throw new NotImplementedException();
+        }
+        public Task<int> DeleteAsync(int id)
         {
             throw new NotImplementedException();
         }

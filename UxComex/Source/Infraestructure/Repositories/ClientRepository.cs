@@ -1,5 +1,8 @@
-﻿using UxComex.Source.Domain.Entities;
+﻿using System.Data.SqlClient;
+using System.Data;
+using UxComex.Source.Domain.Entities;
 using UxComex.Source.Domain.Interfaces.Repositories;
+using Dapper;
 
 namespace UxComex.Source.Infraestructure.Repositories
 {
@@ -11,29 +14,50 @@ namespace UxComex.Source.Infraestructure.Repositories
         {
             _connectionString = connectionString;
         }
-        public Task<bool> DeleteAsync(int id)
+        public async Task<IEnumerable<ClientEntity>> GetAllAsync()
         {
-            throw new NotImplementedException();
+            using IDbConnection db = new SqlConnection(_connectionString);
+            string query = "SELECT * FROM Client";
+            return await db.QueryAsync<ClientEntity>(query);
         }
 
-        public Task<IEnumerable<ClientEntity>> GetAllAsync()
+        public async Task<ClientEntity> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = new SqlConnection(_connectionString);
+            string query = "SELECT * FROM Client WHERE Id = @Id";
+            return await db.QueryFirstOrDefaultAsync<ClientEntity>(query, new { Id = id });
         }
 
-        public Task<ClientEntity> GetByIdAsync(int id)
+        public async Task<int> InsertAsync(ClientEntity entity)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = new SqlConnection(_connectionString);
+            string query = @"
+                INSERT INTO 
+                    Client (Name, Telephone, Cpf) 
+                    VALUES (@Name, @Telephone, @Cpf); 
+                    SELECT CAST(SCOPE_IDENTITY() as int)";
+            int id = await db.QueryFirstOrDefaultAsync<int>(query, entity);
+            return id;
         }
 
-        public Task<int> InsertAsync(ClientEntity entity)
+        public async Task<int> UpdateAsync(ClientEntity entity)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = new SqlConnection(_connectionString);
+            string query = @"
+                UPDATE 
+                    Client SET 
+                    Name = @Name, 
+                    Telephone = @Telephone, 
+                    Cpf = @Cpf 
+                    WHERE Id = @Id";
+            return await db.ExecuteAsync(query, entity);
         }
 
-        public Task<bool> UpdateAsync(ClientEntity entity)
+        public async Task<int> DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            using IDbConnection db = new SqlConnection(_connectionString);
+            string query = "DELETE FROM Client WHERE Id = @Id";
+            return await db.ExecuteAsync(query, new { Id = id });
         }
     }
 }
