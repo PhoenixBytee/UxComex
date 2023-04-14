@@ -3,8 +3,14 @@ using UxComex.Source.Domain.Interfaces.Repositories;
 
 namespace UxComex.Source.Infraestructure.Repositories
 {
-    public class IClientRepository : IRepository<ClientEntity>
+    public class ClientRepository : IClientRepository
     {
+        private readonly string _connectionString;
+
+        public ClientRepository(string connectionString)
+        {
+            _connectionString = connectionString;
+        }
         public Task<bool> DeleteAsync(int id)
         {
             throw new NotImplementedException();
