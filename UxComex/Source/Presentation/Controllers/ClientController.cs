@@ -37,7 +37,13 @@ namespace UxComex.Source.Presentation.Controllers
                 UpdateddAt = DateTime.Now.AddDays(-5)
             };
 
-           
+            var addressList = new List<AddressViewModel>
+            {
+                new AddressViewModel { Id = 1, Street = "Main Street", City = "New York", State = "NY", ZipCode = "10001", ClientId = client.Id, CreatedAt = DateTime.Now.AddDays(-10), UpdateddAt = DateTime.Now.AddDays(-5) },
+                new AddressViewModel { Id = 2, Street = "Broadway", City = "New York", State = "NY", ZipCode = "10002", ClientId = client.Id, CreatedAt = DateTime.Now.AddDays(-9), UpdateddAt = DateTime.Now.AddDays(-4) }
+            };
+
+
             if (client == null)
             {
                 return NotFound();
@@ -53,8 +59,31 @@ namespace UxComex.Source.Presentation.Controllers
                 UpdateddAt = client.UpdateddAt
             };
 
-            return View(clientViewModel);
+            var viewModel = new ClientDetailsViewModel
+            {
+                Addresses = addressList,
+                Client = clientViewModel
+            };
+
+            return View(viewModel);
         }
+
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Create(ClientViewModel client)
+        {
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
+            return View(client);
+        }
+
 
         public IActionResult Privacy()
         {

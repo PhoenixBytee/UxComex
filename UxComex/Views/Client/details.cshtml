@@ -1,30 +1,121 @@
-﻿@model UxComex.Source.Presentation.ViewModels.ClientViewModel
+﻿@model UxComex.Source.Presentation.ViewModels.ClientDetailsViewModel
 
 @{
     ViewData["Title"] = "Detalhes do Cliente";
 }
 
-<div class="container mt-5">
-    <div class="card">
-        <div class="card-header bg-primary text-white">
-            Detalhes do Cliente
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Id:</strong> @Model.Id</p>
-                    <p><strong>Nome:</strong> @Model.Name</p>
-                    <p><strong>Telefone:</strong> @Model.Telephone</p>
-                    <p><strong>CPF:</strong> @Model.Cpf</p>
-                    <p><strong>Data de Criação:</strong> @Model.CreatedAt.ToString("dd/MM/yyyy")</p>
-                    <p><strong>Data de Atualização:</strong> @Model.UpdateddAt.ToString("dd/MM/yyyy")</p>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col">
+            <h1 class="mb-4">{{ Model.Client.Name }}</h1>
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Detalhes do cliente</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <strong>ID:</strong> {{ Model.Client.Id }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Telefone:</strong> {{ Model.Client.Telephone }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>CPF:</strong> {{ Model.Client.Cpf }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Data de criação:</strong> {{ Model.Client.CreatedAt }}
+                        </li>
+                        <li class="list-group-item">
+                            <strong>Data de atualização:</strong> {{ Model.Client.UpdateddAt }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="card mt-4">
+                <div class="card-header">
+                    <h4 class="card-title">Endereços</h4>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary float-right" data-toggle="modal" data-target="#addAddressModal">
+                            Adicionar Endereço
+                        </button>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Rua</th>
+                                <th>Cidade</th>
+                                <th>Estado</th>
+                                <th>CEP</th>
+                                <th>Data de criação</th>
+                                <th>Data de atualização</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for address in Model.Addresses %}
+                            <tr>
+                                <td>{{ address.Id }}</td>
+                                <td>{{ address.Street }}</td>
+                                <td>{{ address.City }}</td>
+                                <td>{{ address.State }}</td>
+                                <td>{{ address.ZipCode }}</td>
+                                <td>{{ address.CreatedAt }}</td>
+                                <td>{{ address.UpdateddAt }}</td>
+                                <td>
+                                    <a href="#" class="btn btn-primary btn-sm">Editar</a>
+                                    <a href="#" class="btn btn-danger btn-sm">Excluir</a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            <a href="@Url.Action("Index", "Client")" class="btn btn-secondary">Voltar</a>
-            <a href="@Url.Action("Edit", "Client", new { id = Model.Id })" class="btn btn-primary">Editar</a>
-            <a href="@Url.Action("Delete", "Client", new { id = Model.Id })" class="btn btn-danger">Excluir</a>
+    </div>
+</div>
+
+
+<div class="modal fade" id="addAddressModal" tabindex="-1" role="dialog" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAddressModalLabel">Adicionar Endereço</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Create", "Adress")">
+                    @*
+                    <input type="hidden" name="clientId" value="@Model.Id" />
+                    *@
+                    <div class="form-group">
+                        <label for="street">Rua</label>
+                        <input type="text" class="form-control" id="street" name="street" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="city">Cidade</label>
+                        <input type="text" class="form-control" id="city" name="city" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="state">Estado</label>
+                        <input type="text" class="form-control" id="state" name="state" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="zipCode">CEP</label>
+                        <input type="text" class="form-control" id="zipCode" name="zipCode" required />
+                    </div>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </form>
+            </div>
         </div>
     </div>
 </div>
+

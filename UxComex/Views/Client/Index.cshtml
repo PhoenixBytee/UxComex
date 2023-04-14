@@ -6,7 +6,7 @@
     <h1>@ViewData["Title"]</h1>
     <div class="row">
         <div class="col-md-12">
-            <a href="#" class="btn btn-success float-right mb-3" data-toggle="modal" data-target="#addClientModal">
+            <a href="@Url.Action("Create", "Client")" class="btn btn-success mb-4">
                 Adicionar Cliente
             </a>
             <table class="table table-striped table-bordered table-hover">
@@ -47,21 +47,3 @@
         </div>
     </div>
 </div>
-
-<!-- Modal para adicionar cliente -->
-<div class="modal fade" id="addClientModal" tabindex="-1" role="dialog" aria-labelledby="addClientModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="addClientModalLabel">Adicionar Cliente</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <!-- Formulário para adicionar cliente -->
-            </div>
-        </div>
-    </div>
-</div>
-
