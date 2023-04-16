@@ -1,3 +1,4 @@
+using dotenv.net;
 using UxComex.Source.Domain.Interfaces.Repositories;
 using UxComex.Source.Domain.Interfaces.Services;
 using UxComex.Source.Infraestructure.Repositories;
@@ -5,9 +6,11 @@ using UxComex.Source.Infraestructure.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+DotEnv.Load();
+
 builder.Configuration.AddJsonFile("appsettings.json");
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = Environment.GetEnvironmentVariable("MY_CONNECTION_STRING") ?? builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddScoped<IClientRepository>(x =>
     new ClientRepository(connectionString));
