@@ -37,5 +37,10 @@ namespace UxComex.Source.Infraestructure.Services
         {
             return await _clientRepository.DeleteAsync(id);
         }
+
+        public async Task<IEnumerable<ClientEntity>> GetAllFiltered(string column, string search)
+        {
+            return await _clientRepository.GetAllFilteredAsync(column, search);
+        }
     }
 }

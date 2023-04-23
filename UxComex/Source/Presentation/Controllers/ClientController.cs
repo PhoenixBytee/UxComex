@@ -16,9 +16,17 @@ namespace UxComex.Source.Presentation.Controllers
             _addressService = addressService;
         }
 
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> IndexAsync(string column, string search)
         {
-            var clients = await _clientService.GetAll();
+            IEnumerable<ClientEntity> clients;
+
+            if (search == null)
+            {
+                clients = await _clientService.GetAll();
+            } else
+            {
+                clients = await _clientService.GetAllFiltered(column.Trim().ToLower(), search.Trim().ToLower());
+            }
 
             List<ClientViewModel> addressViewModels = clients.Select(c => new ClientViewModel
             {

@@ -60,5 +60,13 @@ namespace UxComex.Source.Infraestructure.Repositories
             string query = "DELETE FROM Client WHERE Id = @Id";
             return await db.ExecuteAsync(query, new { Id = id });
         }
+
+        public async Task<IEnumerable<ClientEntity>> GetAllFilteredAsync(string column, string search)
+        {
+            using IDbConnection db = new SqlConnection(_connectionString);
+            string query = $"SELECT * FROM Client WHERE {column} LIKE @search";
+            return await db.QueryAsync<ClientEntity>(query, new { search = $"%{search}%" });
+        }
+
     }
 }
