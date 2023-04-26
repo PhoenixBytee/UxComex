@@ -3,6 +3,17 @@
 @{
     ViewBag.Title = "Client Details";
 }
+
+@if (@TempData["success"] != null)
+{
+    <div id="alert" class="alert-feedback alert alert-success alert-dismissible fade show d-flex justify-content-between" role="alert">
+        @TempData["success"]
+        <span type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+            <span aria-hidden="true">X</span>
+        </span>
+    </div>
+}
+
 <div class="container mt-3">
     <div class="card">
         <div class="card-header bg-primary text-white">

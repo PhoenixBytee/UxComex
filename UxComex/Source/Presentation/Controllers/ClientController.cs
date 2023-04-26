@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Reflection;
 using UxComex.Source.Domain.Entities;
 using UxComex.Source.Domain.Interfaces.Services;
 using UxComex.Source.Presentation.ViewModels;
@@ -85,8 +86,8 @@ namespace UxComex.Source.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ClientViewModel model)
         {
-            if (!ModelState.IsValid)
-            {
+            if (!ModelState.IsValid){ 
+                TempData["error"] = "Não foi possível salvar o cliente!";
                 return View(model);
             }
 
@@ -98,9 +99,16 @@ namespace UxComex.Source.Presentation.Controllers
                 CreatedAt = DateTime.Now
             };
 
-            int id = await _clientService.Create(client);
-
-            return RedirectToAction("Details", new { id = id });
+            try
+            {
+                int id = await _clientService.Create(client);
+                TempData["success"] = "Cliente Salvo com sucesso!";
+                return RedirectToAction("Details", new { id = id });
+            }catch
+            {
+                TempData["error"] = "Não foi possível salvar o cliente!";
+                return View(model);
+            }
         }
 
         [HttpGet]
@@ -138,9 +146,17 @@ namespace UxComex.Source.Presentation.Controllers
                 UpdatedAt= DateTime.Now
             };
 
-            await _clientService.Update(client);
-
-            return RedirectToAction("Index", "Client");
+            try
+            {
+                await _clientService.Update(client);
+                TempData["success"] = "Cliente editado com sucesso!";
+                return RedirectToAction("Index", "Client");
+            }
+            catch
+            {
+                TempData["error"] = "Não foi possível editar o cliente!";
+                return View("Edit", viewModel);
+            }
         }
 
         public async Task<IActionResult> Delete(int id)
@@ -151,9 +167,17 @@ namespace UxComex.Source.Presentation.Controllers
                 return NotFound();
             }
 
-           await _clientService.Delete(id);
-
-            return RedirectToAction("Index");
+            try
+            {
+                await _clientService.Delete(id);
+                TempData["success"] = "Cliente deletado com sucesso!";
+                return RedirectToAction("Index");
+            }
+            catch
+            {
+                TempData["error"] = "Não foi possível deletar o cliente!";
+                return NotFound();
+            }
         }
 
     }

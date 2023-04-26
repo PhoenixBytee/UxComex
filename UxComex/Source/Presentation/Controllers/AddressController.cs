@@ -19,21 +19,27 @@ namespace UxComex.Source.Presentation.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAsync(string street, string city, string state, string zipCode, int clientId)
         {
+            
+            var address = new AddressEntity
             {
-                var address = new AddressEntity
-                {
-                    City = city,
-                    Street = street,
-                    State = state,
-                    ZipCode = zipCode,
-                    ClientId = clientId,
-                };
+                City = city,
+                Street = street,
+                State = state,
+                ZipCode = zipCode,
+                ClientId = clientId,
+            };
 
+            try
+            {
                 int id = await _addressService.Create(address);
-
-                return RedirectToAction("Details", "Client", new { id = clientId });
+                TempData["success"] = "Endereço salvo com sucesso!";
             }
-
+            catch
+            {
+                TempData["error"] = "Não foi possível salvar o endereço!";
+            }
+                
+            return RedirectToAction("Details", "Client", new { id = clientId });
         }
 
         [HttpGet]
@@ -60,6 +66,7 @@ namespace UxComex.Source.Presentation.Controllers
         {
             if (!ModelState.IsValid)
             {
+                TempData["error"] = "Não foi possível editar o endereço!";
                 return RedirectToAction("Details", "Client", new { id = viewModel.ClientId });
             }
 
@@ -74,22 +81,40 @@ namespace UxComex.Source.Presentation.Controllers
                 UpdatedAt = DateTime.Now
             };
 
-            await _addressService.Update(address);
-
-            return RedirectToAction("Details", "Client", new { id = viewModel.ClientId });
+            try
+            {
+                await _addressService.Update(address);
+                TempData["success"] = "Endereço editado com sucesso!";
+                return RedirectToAction("Details", "Client", new { id = viewModel.ClientId });
+            }
+            catch
+            {
+                TempData["error"] = "Não foi possível editar o endereço!";
+                return RedirectToAction("Details", "Client", new { id = viewModel.ClientId });
+            }
         }
 
         public async Task<IActionResult> Delete(int id)
         {
-            var client = await _addressService.GetById(id);
-            if (client == null)
+            var address = await _addressService.GetById(id);
+            if (address == null)
             {
+                TempData["error"] = "Não foi possível deletar o endereço!";
                 return NotFound();
             }
 
-            await _addressService.Delete(id);
+            try
+            {
+                await _addressService.Delete(id);
+                TempData["success"] = "Endereço deletado com sucesso!";
+                return RedirectToAction("Details", "Client", new { id = address.ClientId });
+            }
+            catch
+            {
+                TempData["error"] = "Não foi possível deletar o endereço!";
+                return RedirectToAction("Details", "Client", new { id = address.ClientId });
+            }
 
-            return RedirectToAction("Details", "Client", new { id = client.Id });
         }
     }
 }
